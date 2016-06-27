@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      
+      <% if @pbcore.password_required? %>
+        <%= render partial: 'password_modal' %>
+      <% end %>
+      
+      <h2><%= @pbcore.title %></h2>
+      
+      <%= content_tag('p', @pbcore.date) if @pbcore.date %>
+      
+      <%= content_tag('p', @pbcore.asset_description) %>
+      
+      <%= render partial: 'catalog/player/player' %>
+      
+      <dl>
+        <% [
+              {field: 'series_title', label: 'Series', facet_link: true},
+              {field: 'program_title', label: 'Program', facet_link: true},
+              {field: 'program_number'},
+              {field: 'asset_title', label: 'Title'},
+              {field: 'series_description'},
+              {field: 'program_description'},
+              {field: 'duration'},
+              {field: 'asset_type'},
+              {field: 'media_type'},
+              {field: 'subjects', facet_link: true},
+              {field: 'locations', facet_link: true},
+              {field: 'genres', facet_link: true},
+              {field: 'topics', facet_link: true},
+              {field: 'creators', search_link: true},
+              {field: 'contributors', search_link: true},
+              {field: 'publishers', label: 'Publication Information', search_link: true},
+              {field: 'rights_summary'}
+            ].each do |field_def| %>
+          <%= render partial: 'pbcore_field', locals: field_def %>
+        <% end %>
+        <dt>Citation</dt>
+        
+        <% url = "<span class='long-url'>http://openvault.wgbh.org/catalog/#{@pbcore.id}</span>".html_safe %>
+        <% today = Date.today.to_formatted_s(:long) %>
+        <% org = 'WGBH Media Library & Archives' %>
+        
+        <dd><em>Chicago</em>: 
+            &ldquo;<%= @pbcore.title %>,&rdquo;
+            <%= @pbcore.date + ',' if @pbcore.date %> 
+            <%= org %>, 
+            accessed <%= today %>, 
+            <%= url %>.</dd>
+        <dd><em>MLA</em>:
+            &ldquo;<%= @pbcore.title %>.&rdquo;
+            <%= @pbcore.date + '.' if @pbcore.date %>
+            <%= org %>.
+            Web. <%= today %>. 
+            &lt;<%= url %>&gt;.</dd>
+        <dd><em>APA</em>:
+            <%= @pbcore.title %>.
+            Boston, MA: <%= org %>.
+            Retrieved from <%= url %></dd>
+      </dl>
+
+      <div class="well well-sm">
+          If you have more information about this item, we want to know! Please
+          <a href="mailto:openvault@wgbh.org?<%=
+            {
+              subject: "More information about \"#{@pbcore.short_title}\"",
+              body: "http://openvault.wgbh.org/catalog/#{@pbcore.id}"
+            }.to_query
+          %>">contact us</a>, including the URL.
+      </div>
+    </div>
+  </div>
+</div>

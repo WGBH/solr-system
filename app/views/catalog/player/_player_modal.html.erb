@@ -1,0 +1,38 @@
+<div class="modal fade" id="request-modal" tabindex="-1" role="dialog" aria-labelledby="request-modal-title">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="request-modal-title">Digitization and Transcription Requests</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          You can contribute to the digitization and transcription of materials on Open Vault.
+          Costs vary between items, and digitization may be restricted by copyright,
+          but explain your interests via 
+          <a href="mailto:openvault@wgbh.org?<%=
+            {
+              subject: 'Digitization request',
+              body: 'I am interested in http://openvault.wgbh.org/catalog/' + @pbcore.id
+            }.to_query
+          %>">email</a>, 
+          and we will work with you to make more historic WGBH content available to the world.
+        </p>
+        <p>
+          If you are interested in licensing stock footage please visit
+          <a href="http://wgbhstocksales.org">WGBH Stock Sales</a>, or contact us directly at 
+          <a href="mailto:stock_sales@wgbh.org">stock_sales@wgbh.org</a> or 617-300-3939.
+        </p>
+        <p>
+          If you are a researcher you may schedule an appointment to visit 
+          the WGBH Media Library and Archives in Boston, Massachusetts by emailing
+          <a href="mailto:archive_requests@wgbh.org">archive_requests@wgbh.org</a>.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" 
+                onclick="$('#request-modal').modal('hide');">
+            Close</button>
+      </div>
+    </div>
+  </div>
+</div>

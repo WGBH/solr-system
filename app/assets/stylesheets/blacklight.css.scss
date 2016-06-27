@@ -1,0 +1,23 @@
+// Bootstrap config:
+
+//$grid-gutter-width: 30px;
+//$container-large-desktop: (1200px + $grid-gutter-width);
+//$screen-lg: $container-large-desktop; // Default is just 1200px, so our wide graphic was being chomped.
+
+// Local variables:
+
+//$well-padding: 19px; // hardcoded internally.
+
+
+// Imports:
+
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'blacklight/blacklight';
+
+
+// CSS overrides:
+
+body {
+    background: #FFF !important;
+}

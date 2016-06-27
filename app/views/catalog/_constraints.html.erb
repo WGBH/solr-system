@@ -1,0 +1,26 @@
+<%# OV tweak: not just any params will do + no start over + put 'unless' inside to preserve whitespace. %>
+<div id="appliedParams" class="clearfix constraints-container">
+  <% unless params[:f] == {'access' => [PBCore::ONLINE]} && params[:q].blank? %>
+    <span class="constraints-label"><%= t('blacklight.search.filters.title') %></span>
+    <%= render_constraints(params) %>
+  <% end %>
+  
+  <span class="hidden-sm hidden-md hidden-lg pull-right">
+    <!-- Preserve space for the hamburger, which is also pull-right in small. -->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span>
+  <% unless params[:f] == {'access' => [PBCore::ALL]} %>
+    <span class="constraints-label pull-right">
+        Or search <%=
+      link_to(
+        'all records',
+        begin
+          params = request.params.except(:action, :controller).clone
+          params[:f][:access] = [PBCore::ALL]
+          '/catalog?' + params.to_query
+        end
+      ) %>, not just media.
+    </span>
+  <% end %>
+</div>

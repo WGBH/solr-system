@@ -1,0 +1,5 @@
+inherit_from: .rubocop_todo.yml
+AllCops:
+  Exclude:
+    - 'bin/**/*' # I didn't write these, so I don't want to touch them.
+    - 'vendor/**/*' # Travis puts stuff here.

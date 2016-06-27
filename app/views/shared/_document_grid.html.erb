@@ -1,0 +1,12 @@
+<% documents += [other_count] if defined? other_count %>
+<%= render layout: 'shared/grid', 
+           locals: { 
+             docs: documents,
+             cols: {
+                lg: 4,
+                md: 3,
+                sm: 2,
+                xs: 1 }
+           } do |document| %>
+  <%= render partial: 'shared/document', locals: {document: document} %>
+<% end %>

@@ -1,0 +1,22 @@
+<%# Moved out of _search_header. %>
+<%= render 'constraints' %>
+
+<div id="sidebar">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <%= render 'search_sidebar' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="content" class="container-fluid">
+  <%# Added container-fluid for a bit more padding so margins align. %>
+  <% unless has_search_parameters? %>
+    <%# We should never get here, because we redirect to add the access facet. -%>
+    <%= render 'home' %>
+  <% else %>
+    <%= render 'search_results' %>
+  <% end %>
+</div>

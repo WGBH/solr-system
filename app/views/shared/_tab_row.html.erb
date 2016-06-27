@@ -1,0 +1,13 @@
+<% if item.tabs.count > 1 %>
+  <% anchor = 'tabs' %>
+  <ul id="<%= anchor %>" class="well col-md-4">
+    <% item.tabs.each do |key,tab|
+        next if skip.include?(key)
+        selected = key == params[:tab] %>
+        <li>
+          <% if selected %><span class="pointer">&#x25B6;</span><% end %>
+          <%= link_to_unless(selected, tab.title, "/#{params[:controller]}/#{params[:id]}/#{key}##{anchor}" ) %>
+        </li>
+    <% end %>
+  </ul>
+<% end %>

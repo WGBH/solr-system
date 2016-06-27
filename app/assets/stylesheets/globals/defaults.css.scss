@@ -1,0 +1,42 @@
+$font-family: 'sans-serif' !default;
+
+html > body {
+    font-family: $font-family;
+    font-size: 18px;
+    a:hover { text-decoration: none; } // No examples in specs of underline.
+    h1 {
+        font-size: 48px;
+        font-weight: $bold;
+        margin-bottom: 35px;
+        margin-top: 55px;
+    }
+    h2 {
+        font-weight: $semibold;
+    }
+    .btn-primary {
+        background: $medium-blue;
+        border: none;
+    }
+    .container-fluid {
+        // For the header and footer we nest a .container with the content
+        // inside a .container-fluid to get the color bar full width.
+        // Without this, we get a horizontal scrolls near breakpoint widths.
+        overflow: hidden; 
+    }
+}
+
+.blacklight-override {
+    #main-container {
+        line-height: 35px;
+        p { margin: 0 0 40px; }
+        img { 
+            max-width: 100%; 
+            float: left;
+            padding-right: 30px;
+            padding-top: 10px; // To account for extra line-height.
+        }
+        a img {
+            float: none; // Typically logos, which stand by themselves on the line 
+        }
+    }
+}

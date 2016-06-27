@@ -1,0 +1,21 @@
+<div id="header" class="container-fluid">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <a href="/"><%= render partial: 'shared/ov_logo.svg' %></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <form action="/catalog">
+          <%= render_hash_as_hidden_fields(params.except(:q, :controller, :action)) %>
+          <input name="q" placeholder="Search..." value="<%= params[:q] %>" onchange="this.form.submit();"/>
+          <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
+        </form>
+      </div>
+      <div class="col-md-9 hidden-sm hidden-xs nav">
+        <%= link_to(t('donate'), '/donate', id: 'donate') %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,170 @@
+.blacklight-catalog-index {
+    .btn,.dropdown-menu {
+        border-radius: 0px; // TODO: Perhaps move up?
+    }
+    #facets {
+        .top-panel-heading { border: none; } // Only matters on xs screen width.
+        a { text-decoration: none; } // They were only erratically appearing.
+        padding: 0px;
+    }
+    #appliedParams {
+        border: none;
+        background: none;
+        padding: $grid-gutter-width/2;
+        line-height: 1.95 !important; // Hack to get the baselines on left and right to align.
+        margin: 0px;
+    }
+    @media (min-width: $screen-md-min) {
+        #sidebar {
+            background: $medium-blue;
+            .facet-content .panel-body {
+                position: absolute; // So the div doesn't expand when the menu drops.
+            }
+        }
+    }
+    @media (max-width: $screen-sm-max) {
+        #sidebar .panel-title::after {
+            float: none; // Blacklight floats them right, but that's too far if it's the whole screen width.
+        }
+    }
+    @media (max-width: $screen-xs-max) {
+        .facets-toggle { margin-top: -50px; }
+        // Move it up to a more natural location, and then kill the space it would have used.
+        .top-panel-heading.panel-heading {
+            margin: 0px; padding: 0px; height: 0px;
+        }
+    }
+    
+    #sidebar {
+        padding: 0px; // BL default extra space below
+        margin: 0 grid-gutter-width / 2;
+        .panel-group {
+            .panel-heading {
+                background: #FFF;
+                color: #000 !important; // Ignore facet_limit-active
+                border-radius: 0px;
+                @media (max-width: $screen-md-max) {
+                    padding: 10px; // So arrows do not wrap out of box.
+                }
+            }
+            .panel-collapse {
+                position: relative; // Explicit position necessary for z-index to work
+                z-index: 1000;
+                .panel-body {
+                    overflow: visible;
+                    padding: 0px;
+                    border: none; // Default has top border; hide because of width
+                    @media (min-width: $screen-md-min) {
+                        width: 500px; // Give children plenty of room
+                    }
+                    @media (max-width: $screen-sm-max) {
+                        width: 100%;
+                    }
+                    .facet-values {
+                        display: table-cell;
+                        background: $pale-grey;
+                        font-weight: $medium;
+                        width: auto; // BL defaults to 100%
+                        .facet-label {
+                            padding: 0px;
+                            text-indent: 0px;
+                            word-break: normal; // I have never liked BL's default.
+                            a { 
+                                color: #000;
+                                display: block;
+                                padding: $grid-gutter-width/8 $grid-gutter-width/2; // To match menu header
+                                &:hover {
+                                    background: $light-blue;
+                                }
+                            }
+
+
+                        }
+                        .selected, {
+                            background: $pale-blue;
+                            a::after { content: ' \2713'; } // Checkmark
+                        }
+
+                        .facet-count {
+                            // If we changed the DOM structure so the count is inside the link,
+                            // this wouldn't be necessary. This approach also puts a non-<a>
+                            // on top of the <a>, which could be confusing. TODO.
+                            position: absolute;
+                            right: $grid-gutter-width/2;
+                            bottom: $grid-gutter-width * .6; // hack to get alignment
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    #facet-year .panel-body {
+        right: 0;
+        .limit_content {
+            background: $pale-grey;
+            padding: $grid-gutter-width/2;
+            .slider-handle {
+                background: $dark-blue;
+                opacity: 1;
+            }
+            .slider-selection {
+                background: $medium-grey;
+            }
+            .facet-values { display: none !important; }
+        }
+    }
+
+          
+    
+    #content {
+        padding-top: $grid-gutter-width/2;
+
+        .page_links {
+            // This is cleaner than the spec, but we can revisit.
+            .arrow { display: none; }
+            a {
+                &:hover { text-decoration: none; }
+                .arrow { display: inline; }
+            }
+        }
+        
+        #sortAndPerPage {
+            border: none; // Default has line at bottom.
+            padding: 0px;
+            margin: 0px;
+            #per_page-dropdown { display: none; } // Not in spec.
+        }
+         // But what should we do for sm and xs? TODO.
+        .document {
+            display: inline;
+            border: none;
+            img {
+                width: 100%;
+                margin-bottom: 0;
+            }
+            .info {
+               color: $dark-blue;
+               padding: 15px 0 50px;
+            }
+            &:hover .highlight {
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                right: auto;
+                background-color: $transparent;
+                color: #FFF;
+                text-align: left;
+                padding: $grid-gutter-width/4 $grid-gutter-width;
+                em {
+                    font-weight: $semibold;
+                    font-style: none;
+                }
+            }
+        }
+        .record-padding {
+            display: none; // Hide pager at bottom.
+        }
+    }
+
+}

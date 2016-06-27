@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<!--
+ For more information, on how to customize this file, please see
+ http://wiki.apache.org/solr/SchemaXml
+-->
+
+<schema name="Open Vault" version="1.5">
+
+  <types>
+    <!-- field type definitions. The "name" attribute is
+       just a label to be used by field definitions.  The "class"
+       attribute and any other attributes determine the real
+       behavior of the fieldType.
+         Class names starting with "solr" refer to java classes in the
+       org.apache.solr.analysis package.
+    -->
+
+    <!-- The StrField type is not analyzed, but indexed/stored verbatim. -->
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+
+    <!-- The format for this date field is of the form 1995-12-31T23:59:59Z, and
+         is a more restricted form of the canonical representation of dateTime
+         http://www.w3.org/TR/xmlschema-2/#dateTime    
+         The trailing "Z" designates UTC time and is mandatory.
+         Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z
+         All other components are mandatory.
+
+         Expressions can also be used to denote calculations that should be
+         performed relative to "NOW" to determine the value, ie...
+
+               NOW/HOUR
+                  ... Round to the start of the current hour
+               NOW-1DAY
+                  ... Exactly 1 day prior to now
+               NOW/DAY+6MONTHS+3DAYS
+                  ... 6 months and 3 days in the future from the start of
+                      the current day
+                      
+         Consult the DateField javadocs for more information.
+
+         Note: For faster range queries, consider the tdate type
+      -->
+    <fieldType name="date" class="solr.TrieDateField" omitNorms="true" precisionStep="0" positionIncrementGap="0"/>
+
+
+    <!-- solr.TextField allows the specification of custom text analyzers
+         specified as a tokenizer and a list of token filters. Different
+         analyzers may be specified for indexing and querying.
+
+         The optional positionIncrementGap puts space between multiple fields of
+         this type on the same document, with the purpose of preventing false phrase
+         matching across fields.
+
+         For more info on customizing your analyzer chain, please see
+         http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters
+     -->
+     <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+       <analyzer>
+         <tokenizer class="solr.StandardTokenizerFactory"/>
+         <filter class="solr.ICUFoldingFilterFactory" />
+         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true" />
+         <filter class="solr.SnowballPorterFilterFactory" language="English" />
+       </analyzer>
+     </fieldType>
+
+    
+    <fieldType name="sort" class="solr.TextField">
+        <analyzer>
+            <!-- One token -->
+            <tokenizer class="solr.KeywordTokenizerFactory"/>
+            <filter class="solr.ASCIIFoldingFilterFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+            <filter class="solr.TrimFilterFactory"/>
+            <filter class="solr.PatternReplaceFilterFactory"
+                    pattern="^(a |an |the )" replacement="" replace="all"/>
+            <filter class="solr.PatternReplaceFilterFactory"
+                    pattern="[^\w\s]+" replacement="" replace="all"/>
+            <!-- Pad with "z" so numbers sort last -->
+            <filter class="solr.PatternReplaceFilterFactory"
+                    pattern="(\d+)" replacement="zzzz$1" replace="all"/>
+            <!-- Zero pad to mask lexicographic sort behavior. -->
+            <filter class="solr.PatternReplaceFilterFactory"
+                    pattern="(\d+)" replacement="00000$1" replace="all"/>
+            <filter class="solr.PatternReplaceFilterFactory"
+                    pattern="0*([0-9]{6,})" replacement="$1" replace="all"/>
+        </analyzer>
+    </fieldType>
+ </types>
+
+ <highlighting>
+     <!-- Configure the standard fragmenter -->
+     <!-- This could most likely be commented out in the "default" case -->
+     <fragmenter name="gap" class="org.apache.solr.highlight.GapFragmenter" default="true">
+         <lst name="defaults">
+             <int name="hl.fragsize">3</int>
+         </lst>
+     </fragmenter>
+
+     <formatter name="html" class="org.apache.solr.highlight.HtmlFormatter" default="true">
+         <lst name="defaults">
+             <str name="hl.simple.pre"><![CDATA[<em>]]></str>
+             <str name="hl.simple.post"><![CDATA[</em>]]></str>
+         </lst>
+     </formatter>
+
+ </highlighting>
+
+ <fields>
+   <!-- Valid attributes for fields:
+     name: mandatory - the name for the field
+     type: mandatory - the name of a previously defined type from the 
+       <types> section
+     indexed: true if this field should be indexed (searchable or sortable)
+     stored: true if this field should be retrievable
+     multiValued: true if this field may contain multiple values per document
+     omitNorms: (expert) set to true to omit the norms associated with
+       this field (this disables length normalization and index-time
+       boosting for the field, and saves some memory).  Only full-text
+       fields or fields that need an index-time boost need norms.
+     termVectors: [false] set to true to store the term vector for a
+       given field.
+       When using MoreLikeThis, fields used for similarity should be
+       stored for best performance.
+     termPositions: Store position information with the term vector.  
+       This will increase storage costs.
+     termOffsets: Store offset information with the term vector. This 
+       will increase storage costs.
+     default: a value that should be used if no value is specified
+       when adding a document.
+   -->
+
+   <field name="id" 
+          type="string" indexed="true" stored="true" required="true" />
+   <field name="timestamp" 
+          type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>
+   
+   <field name="xml" 
+          type="string" indexed="false" stored="true" multiValued="false"/>
+   
+   <!-- default, catch all search field -->
+   <field name="text" 
+          type="text" indexed="true" stored="true" multiValued="true"/>
+   
+      
+   <!--
+   *****************************************
+        Keep in sync with PbCore#to_solr
+   ***************************************** 
+   -->
+   
+   <!-- For the search results page. -->
+   <field name="title"
+          type="sort" indexed="true" stored="true" multiValued="false"/>
+   <field name="thumbnail_src"
+          type="string" indexed="false" stored="true" multiValued="false"/>
+   
+   <!-- For collection lists. -->
+   <field name="short_title"
+          type="sort" indexed="true" stored="true" multiValued="false"/>
+      
+   <!-- Nothing below needs to be stored, but helps with debugging. -->
+   
+   <field name="year" 
+          type="string" indexed="true" stored="true" multiValued="false"/>
+   
+   <!-- links from details and series pages: -->
+   <field name="series_title" 
+          type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="program_title" 
+          type="string" indexed="true" stored="true" multiValued="false"/>
+   
+   <field name="subjects" 
+          type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="locations" 
+          type="string" indexed="true" stored="true" multiValued="true"/>
+   
+   <!-- UI facets -->
+   <field name="access"
+          type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="genres" 
+          type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="topics" 
+          type="string" indexed="true" stored="true" multiValued="true"/>
+   
+   <field name="asset_type" 
+          type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="media_type" 
+          type="string" indexed="true" stored="true" multiValued="false"/>
+   
+   <!-- exhibit/collection support -->
+   <field name="scholar_exhibits" 
+          type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="special_collections" 
+          type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="special_collection_tags" 
+          type="string" indexed="true" stored="true" multiValued="true"/>
+   
+   <field name="playlist_group" 
+          type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="playlist_order" 
+          type="string" indexed="true" stored="true" multiValued="false"/>
+ </fields>
+
+ <!-- Field to use to determine and enforce document uniqueness. 
+      Unless this field is marked with required="false", it will be a required field
+   -->
+ <uniqueKey>id</uniqueKey>
+
+ <!-- field for the QueryParser to use when an explicit fieldname is absent -->
+ <defaultSearchField>text</defaultSearchField>
+
+ <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
+ <solrQueryParser defaultOperator="OR"/>
+
+</schema>

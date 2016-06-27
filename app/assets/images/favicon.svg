@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" viewBox="0 -75 100 100" >
+  <!-- 
+    width="32" matches largest icon size to avoid excessive down-sampling.
+    
+    This file will never be used on the live site, but it can be used to
+    regenerate the actual favicon.ico using imagemagick:
+    
+    $ convert favicon.svg -define icon:auto-resize=32,16 favicon.ico
+    
+    The "baseline" of the letters is the X-axis (with "up" meaning negative y)
+    so the skewX transform can be used to generate both strokes of the "V".
+  -->
+  
+  <rect x="0" y="-75" width="100" height="100" fill="#1F355E"/>
+  
+  <!-- "O" -->
+  <circle cx="25" cy="-25" r="25" fill="#FFF"/>
+  <circle cx="25" cy="-25" r="20" fill="#1F355E"/>
+  
+  <!-- "V" -->
+  <rect x="67" y="-50" width="12" height="50" fill="#FFF" transform="skewX(23)"/>
+  <rect x="67" y="-50" width="12" height="50" fill="#FFF" transform="skewX(-23)"/>
+</svg>

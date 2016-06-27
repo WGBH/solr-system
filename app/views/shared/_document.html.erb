@@ -1,0 +1,19 @@
+<a href="/catalog/<%= document.id %>">
+  <div class="aspect-ratio-4x3">
+    <div class="aspect-ratio-content">
+      <img src="<%= document[:thumbnail_src] %>">
+      <% (@highlighting || {})[document.id].tap do |highlight_html| %>
+        <% if highlight_html %>
+          <div class="highlight">
+            &hellip;
+            <%= highlight_html.html_safe %>
+            &hellip;
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="info">
+    <%= document[:title] %>
+  </div>
+</a>

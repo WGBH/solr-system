@@ -1,0 +1,44 @@
+.blacklight-catalog-show {
+    dl * {
+        margin: $grid-gutter-width/4 0;
+    }
+    dt {
+        font-weight: $semibold;
+    }
+    dd {
+        padding-left: $grid-gutter-width;
+    }
+    #player {
+        background-color: $pale-grey;
+        padding: $grid-gutter-width/2 0;
+        img, video, audio { width: 100%; }
+        iframe { width: 100%; }
+    }
+    #playlist {
+        width: 100%;
+    }
+    #password-modal {
+        #hint {
+            font-family: monospace;
+            font-weight: bold;
+            background: $pale-grey;
+        }
+    }
+    .long-url {
+        // Mostly for line-breaking long URLs in citation, when viewed on mobile.
+        // I think in a URL, hyphens could be confusing... 
+        // We could add a special class to supress hyphenation only on URLs?
+
+        // From: https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+
+        /* These are technically the same, but use both */
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+
+        -ms-word-break: break-all;
+        /* This is the dangerous one in WebKit, as it breaks things wherever */
+        word-break: break-all;
+        /* Instead use this non-standard one: */
+        word-break: break-word;
+    }
+}

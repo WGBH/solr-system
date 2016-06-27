@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pbcoreDescriptionDocument xmlns='http://www.pbcore.org/PBCore/PBCoreNamespace.html'>
+  <pbcoreAssetType>Original footage</pbcoreAssetType>
+  <pbcoreIdentifier source="Open Vault UID">V_77E4F889E4584BDB9D3C7EBAD8394057</pbcoreIdentifier>
+  <pbcoreTitle titleType="Series">A removed: sort 3</pbcoreTitle>
+  <pbcoreDescription descriptionType="Program Description">foo</pbcoreDescription>
+  <pbcoreAnnotation annotationType="Media Type">Video</pbcoreAnnotation>
+  <pbcoreAnnotation annotationType="Playlist Group">demo-3</pbcoreAnnotation>
+  <pbcoreAnnotation annotationType="Playlist Order">3</pbcoreAnnotation>
+</pbcoreDescriptionDocument>

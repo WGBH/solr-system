@@ -1,0 +1,54 @@
+// Inspired by https://css-tricks.com/snippets/sass/maintain-aspect-ratio-
+// mixin/ but removed use of pseudo element because I don't think it is needed
+// to get the desired effect. See below for examples of usage within markup.
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+
+  // When padding is a %, it's calculated as a % of the width of the
+  // containing box. This is how the ratio is maintained.
+  padding-bottom: 100% / ($width / $height);
+
+  // Hide anything outside of the .content box. This can be parameterized in
+  // the mixin if we need to turn it on/off.
+  overflow: hidden;
+
+  // For the contained content, we have an immediate child container that
+  // stretches to it's parent. If you want style the *inside* of the content
+  // within the aspec-ratio container, then apply those styles to the .content
+  // element.
+  > .aspect-ratio-content {
+    // stretch the .content element to its parent with positioning.
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    img { 
+        height: 100% ;
+        // We have some thumbs less than 4x3... but those ones
+        // (for the most part) seem to be slightly squished and distored,
+        // and a vertical stretch is an improvement.
+        padding: 0 !important;
+        // Override default padding for images in text.
+    }
+
+  }
+}
+
+//.aspect-ratio-16x9 {
+//  @include aspect-ratio(16, 9);
+//}
+
+.aspect-ratio-4x3 {
+  @include aspect-ratio(4, 3);
+}
+
+
+// Examples of usage within markup:
+// 
+// <div class="aspect-ratio-16x9">
+//   <div class="aspect-ratio-content">
+//     Content in here will maintain a 16:9 aspect ratio.
+//   </div>
+// </div>

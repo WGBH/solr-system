@@ -1,0 +1,34 @@
+{
+  "Version": "2012-10-17",
+  "Id": "Policy1439933183628",
+  "Statement": [
+    {
+      "Sid": "Stmt1439933167873",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::openvault.wgbh.org/*"
+    },
+    {
+      "Sid": "Explicit deny to ensure requests are allowed only from specific referer.",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::openvault.wgbh.org/catalog/asset_proxies/*",
+      "Condition": {
+        "StringNotLike": {
+          "aws:Referer": [
+            "http://openvault.wgbh.org/*",
+            "http://openvault.wgbh.org:3000/*",
+            "http://demo.openvault.wgbh.org/*",
+            "http://localhost:3000/*",
+            "http://*wgbh-mla.org/*",
+            "http://*wgbh-mla-test.org/*"
+          ]
+        }
+      }
+    }
+  ]
+}

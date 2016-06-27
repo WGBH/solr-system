@@ -1,0 +1,10 @@
+<% items = facet_paginator(facet_field, display_facet).items %>
+<% cols = 1 + items.count / 15 %>
+<% items.in_groups(cols, false) do |group| %>
+  <% as_items = OpenStruct.new(items: group) %>
+  <ul class="facet-values list-unstyled">
+    <%# OV: Pass items rather than just paginator. %>
+    <%= render_facet_limit_list as_items, field_name %>
+    <%# OV: Remove more_facets_link. %>
+  </ul>
+<% end %>

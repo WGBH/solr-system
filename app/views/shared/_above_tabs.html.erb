@@ -1,0 +1,15 @@
+<h2 class="page-title">
+  <%= item.title_html.html_safe %>
+</h2>
+
+<% if item.respond_to?(:author) %>
+  <div class="byline">
+    By <%= item.author.html_safe %>
+  </div>
+<% end %>
+
+<img src="<%= item.img_src %>" class="signature"/>
+
+<div>
+  <%= item.tabs['intro'].content.html_safe %>
+</div>

@@ -1,0 +1,21 @@
+<ul class="facet-values list-unstyled">
+  <% 
+    # Unused:
+    # facet_counts = Hash[display_facet.items.map{|i| [i.value, i.hits]}]
+    access = params.try(:[],'f').try(:[],'access')
+    other_access = ([PBCore::ALL, PBCore::ONLINE] - access).first
+    # Both links in the menu do the same thing, since it's just a toggle.
+    other_href = '/catalog?' + (
+        {f: (params['f'].merge({access: [other_access]}))}.merge(
+          params.except('action', 'controller', 'f')
+        )).to_query
+    [PBCore::ALL, PBCore::ONLINE].each do |option|
+      is_selected = params[:f][:access] == [option]
+  %>
+    <li>
+      <span class="facet-label <%= 'selected' if is_selected %>">
+        <a class="facet_select" href="<%= other_href %>"><%= option %></a>
+      </span>
+    </li>
+  <% end %>
+</ul>

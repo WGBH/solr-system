@@ -1,0 +1,71 @@
+#header {
+    background: $dark-blue;
+    svg#ov-logo,input {
+        width: 250px;
+    }
+    svg#ov-logo {
+        text,path { fill: #FFF;  }
+        &:hover { text,path { fill: $yellow; } }
+    }
+    input {
+        padding: 0px 28px 0px 8px;
+        color: #000;
+    }
+    button {
+        position: absolute;
+        color: #000;
+        background: transparent;
+        z-index: 1000; // Make sure it's clickable.
+        left: 230px;
+        top: 1px;
+        border: none;
+    }
+    _:-moz-tree-row(hover), button {
+        top: 4px; // Hack to get FF positioning right.
+    }
+    .nav { padding-left: 2em; }
+    .nav a {
+        margin-left: 1em;
+        font-size: 22px;
+        font-weight: $medium;
+        &:hover { color: $yellow; }
+        &#donate { color: $yellow; }
+    }
+}
+
+#footer {
+    background: $light-grey;
+    font-size: 22px;
+    margin-top: 80px;
+
+    .primary-links a {
+      font-weight: $semibold;
+    }
+
+    .copyright {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    
+    svg#wgbh-logo {
+      text { font-weight: bold; }
+      path,text { fill: #FFF;  }
+    }
+}
+.blacklight-home #footer svg#wgbh-logo {
+      path,text { fill: $light-grey;  }
+}
+
+
+#header,#footer {
+    @media(min-width: $screen-md-min) {
+        padding: 2em;
+    }
+    @media(max-width: $screen-sm-max) {
+        padding: 1em 0;
+        input { width: 100% }
+        svg#ov-logo { width: 200px; }
+        button { right: 30px; left: auto; }
+    }
+    &, a { color: #FFF; }
+}

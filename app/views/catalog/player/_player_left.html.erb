@@ -1,0 +1,36 @@
+<div class="<%= col_class %>">
+
+  <% if  @pbcore.image? %>
+    <%= tag('img', src: @pbcore.proxy_srcs.first) %>
+  <% end %>
+
+  <% if @pbcore.audio? || @pbcore.proxy_srcs.empty? %>
+    <%= tag('img', src: @pbcore.thumbnail_src) %>
+  <% end %>
+
+  <% if geoblocked? %>
+    <strong>Note:</strong> This content is not available in your region.
+  <% elsif !@pbcore.proxy_srcs.empty? && !@pbcore.image? %>
+    <%= content_tag(@pbcore.video? ? 'video' : 'audio', 
+                  controls: true, id: 'player-media',
+                  oncontextmenu: 'return false;',
+                  poster: @pbcore.thumbnail_src) do %>
+      <% @pbcore.proxy_srcs.each do |src| %>
+        <%= tag('source', src: src, type: @pbcore.video? ? 'video/mp4' : 'audio/mp3') %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if @pbcore.playlist_group %>
+    <div id="playlist">
+      <% if @pbcore.playlist_prev_id %>
+        <a href="/catalog/<%= @pbcore.playlist_prev_id %>" class="pull-left">&#x25c0; Part <%= @pbcore.playlist_order - 1 %></a>
+      <% end %>
+      <% if @pbcore.playlist_next_id %>
+        <a href="/catalog/<%= @pbcore.playlist_next_id %>" class="pull-right">Part <%= @pbcore.playlist_order + 1 %> &#x25b6;</a>
+      <% end %>
+    </div>
+  <% end %>
+
+</div>
+

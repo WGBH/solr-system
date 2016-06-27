@@ -1,0 +1,38 @@
+<% content_for(:page_title) do %>
+  <%= item.title + ' - ' + t('blacklight.application_name') %>
+<% end %>
+
+<div class="container-fluid">
+  <% col_class = 'col-md-11 col-lg-9' %>
+  <div class="row">
+    <div class="<%= col_class %>">
+      <a href="/<%= parent %>" class="back"><%= t(parent) %></a>
+      <%= render partial: 'shared/above_tabs', locals: {item: item} %>
+    </div>
+  </div>
+  <% if params[:tab] %>
+    <%= render partial: 'shared/tab_row', locals: {item: item, skip: ['intro', 'extra', 'author']}%>
+    <% item.tabs[params[:tab]].content.tap do |current_tab| %>
+      <% if current_tab.respond_to?(:each) %>
+        <% top_docs = current_tab[0..10] %>
+        <% other_docs = current_tab[11..-1] || [] %>
+        <%= render partial: 'shared/document_grid', locals: {documents: top_docs, other_count: other_docs.count} %>
+        <% if !other_docs.empty? %>
+          <div class="row no-thumbs">
+            <% other_docs.in_groups(2, false).each do |docs_col| %>
+              <div class="col-md-6">
+                <% docs_col.each do |doc| %>
+                  <a href="/catalog/<%= doc.id %>"><%= doc.title %></a>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="<%= col_class %>">
+          <%= current_tab.html_safe if current_tab %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

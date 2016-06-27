@@ -1,0 +1,10 @@
+<%= render 'sort_and_per_page' %>
+<%= render partial: 'shared/document_grid', locals: {documents: documents} %>
+
+<div class="clearfix">
+  <%# 
+      If you scroll to the bottom, and the paginator is off the screen to the top, 
+      it's helpful to be able to know if there's more. 
+%>
+  <%= render :partial => "paginate_compact", :object => @response if documents.count > 9 %>
+</div>

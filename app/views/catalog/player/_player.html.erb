@@ -1,0 +1,20 @@
+<div id="player">
+  <%# 
+    Full width image; otherwise preserve a relatively 
+    constant portion of the screen for the player.
+    At each size, the columns should sum to 12, though
+    the balance shifts between left and right.
+  %>
+  <%= render partial: 'catalog/player/player_left',  
+             locals: { 
+               col_class: @pbcore.image? ? 'col-xs-12' : 'col-lg-4 col-md-5 col-sm-6 col-xs-12'
+             } %>
+  <%= render partial: 'catalog/player/player_right', 
+             locals: { 
+               col_class: @pbcore.image? ? 'col-xs-12' : 'col-lg-8 col-md-7 col-sm-6 col-xs-12'
+             } %>
+  <div class="clearfix"></div>
+  <%# Parent div collapses without this clearfix: I don't really understand the problem. %>
+</div>
+
+<%= render partial: 'catalog/player/player_modal' %>

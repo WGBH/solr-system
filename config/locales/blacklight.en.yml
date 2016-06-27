@@ -1,0 +1,10 @@
+en:
+  blacklight:
+    application_name: 'WGBH Openvault'
+    search:
+      zero_results:
+        use_fewer_keywords: 'Use fewer terms and check your spelling.'
+  views:
+    pagination_compact:
+      previous: '<span class="arrow">&#x25c0;</span> &nbsp;'
+      next: '&nbsp; <span class="arrow">&#x25b6;</span>'

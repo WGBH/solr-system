@@ -1,0 +1,22 @@
+<%= render layout: 'shared/grid', 
+           locals: { 
+             docs: items,
+             cols: {
+                lg: 3,
+                md: 2,
+                sm: 2,
+                xs: 1 }
+           } do |item| %>
+  <a href="<%= '/' + path + '/' + item.tab_path %>">
+    <!-- Sort order: <%= item.head_html.gsub('<p>', '').to_f %> -->
+    <img src="<%= item.img_src %>"/>
+    <div class="wrap">
+      <div class="info">
+        <h3><%= item.title %></h3>
+        <% if item.respond_to? :author %>
+          by <%= item.author.html_safe %>
+        <% end %>
+      </div>
+    </div>
+  </a>
+<% end %>

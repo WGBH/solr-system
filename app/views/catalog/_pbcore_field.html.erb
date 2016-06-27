@@ -1,0 +1,25 @@
+<% 
+  facet_link ||= false
+  search_link ||= false
+  label ||= field.gsub('_', ' ').titlecase
+  values = [@pbcore.send(field)].flatten.select {|x| x}
+%>
+<% if !values.empty? %>
+  <dt><%= label %></dt>
+  <% values.each do |value| %>
+    <dd><%=
+      if facet_link
+        link_to(value, '/catalog?' + {
+            f: { field => [value.to_s] }
+          }.to_query )
+      elsif search_link
+        link_to(value, '/catalog?' + {
+            f: { access: [PBCore::ALL] },
+            q: value.respond_to?(:name) ? value.name : value.to_s
+          }.to_query )
+      else
+        value.split(/[\n\r]\s*[\n\r]/).map { |v| content_tag(:p,html_escape(v.strip)) }.join.html_safe
+      end
+    %></dd>
+  <% end %>
+<% end %>

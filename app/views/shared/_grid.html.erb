@@ -1,0 +1,20 @@
+<div class="documents row">
+  <%
+    grid = 12 # Needs to match bootstrap's $grid-columns
+    col_classes = cols.map { |k,v| "col-#{k}-#{grid / v}"}.join(' ')
+  %>
+  <% docs.each_with_index do |doc, i| %>
+    <div class="clearfix <%= 
+      cols.map { |k,v| "hidden-#{k}" unless i % v == 0 }.join(' ')  
+    %>"></div>
+    <div class="document <%= col_classes %>">
+      <% if doc.is_a? Fixnum %>
+        <% if doc > 0 %>
+          ... and <strong><%= doc %></strong> more, continuing below.
+        <% end %>
+      <% else %>
+        <%= yield(doc) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

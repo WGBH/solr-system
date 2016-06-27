@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pbcoreDescriptionDocument xmlns='http://www.pbcore.org/PBCore/PBCoreNamespace.html'>
+  <pbcoreAssetType>Original footage</pbcoreAssetType>
+  <pbcoreIdentifier source="Open Vault UID">I_8B3BAB5CD79649BE867CFE665E69B10B</pbcoreIdentifier>
+  <pbcoreTitle titleType="Open Vault Title">Just make sure images work</pbcoreTitle>
+  <pbcoreDescription descriptionType="Asset Description">foo</pbcoreDescription>
+  <pbcoreAnnotation annotationType="Media Type">Image</pbcoreAnnotation>
+  <pbcoreAnnotation annotationType="Digitized">YES</pbcoreAnnotation>
+</pbcoreDescriptionDocument>
